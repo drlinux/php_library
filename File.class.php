@@ -42,7 +42,7 @@ class File implements Iterator {
 	 * Rewind file pointer to start of file
 	 * Iterator interface method
 	 */
-    function rewind() {
+    public function rewind() {
         rewind($this->handle);
     }
 
@@ -53,7 +53,7 @@ class File implements Iterator {
 	 * Without this the pointer would have moved on 2 as as the fgets method used in readLineIntoArray automatically moves the pointer on 1 position.
 	 * Iterator interface method
 	 */
-    function current() {
+    public function current() {
 		$data = $this->readLineIntoArray($this->separator);
 		fseek($this->handle, -$this->line_length, SEEK_CUR);
         return $data;
@@ -63,7 +63,7 @@ class File implements Iterator {
 	 * Return file pointer position 
 	 * Iterator interface method
 	 */
-    function key() {
+    public function key() {
         return ftell($this->handle);
     }
 
@@ -71,7 +71,7 @@ class File implements Iterator {
 	 * Move file pointer on one line
 	 * Iterator interface method
 	 */
-    function next() {
+    public function next() {
         fseek($this->handle, $this->line_length, SEEK_CUR);
     }
 	
@@ -79,7 +79,7 @@ class File implements Iterator {
 	 * Checks for valid file pointer
 	 * Iterator interface method
 	 */
-    function valid() {
+    public function valid() {
 		if (ftell($this->handle) >= $this->end_of_file) {
 			return false;
 		}
