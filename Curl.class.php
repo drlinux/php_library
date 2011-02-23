@@ -5,9 +5,8 @@
  * @package transfer
  * @subpackage curl
  * @author Ryan "Tackleberry" Marshall
- * @author Alex "Lev" Kaye
  */
-class Curl extends Base {
+class Curl {
 	public $ch;
 	public $url;
 	public $timeout = 3;
