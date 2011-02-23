@@ -1,3 +1,8 @@
 php library is just a collection of classes I've written for various tasks.
 
 Most are built over time with new methods added as new functionality is required so may not have the complete set of methods you'd expect as of yet.
+
+NOTE: The following error handling classes were written by alexkay (https://github.com/atkaye) and are included as I have used them in some of the php library classes.
+Error.class.php
+ErrorCatchers.class.php
+ErrorLogger.class.php 
