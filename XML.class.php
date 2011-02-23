@@ -11,19 +11,18 @@ class XML {
 	public $errors;
 	
 	public function __construct($element) {
-		$this->handleErrors();
 		try {
 			$this->element = new SimpleXMLElement($element);
 		} catch(Exception $e) {
-			$this->errors->log(new Error(3, $e->getMessage(), $e->getFile(), $e->getLine()));
+			echo 'Message '. $e->getMessage() .', File: '. $e->getFile() .', Line: '. $e->getLine();
 		}
 	}
 	
-	public function handleErrors() {
+	public function useCustomErrors() {
 		// Disables libxml standard errors to allow custom error handling	
-		libxml_use_internal_errors(true);
-	 	$this->errors = new ErrorLogger();		
+		libxml_use_internal_errors(true);	
 	}
+	
 	/**
 	 * Static methods for simple xml functions used to create an object of SimpleXMLElement
 	 * 
@@ -65,15 +64,11 @@ class XML {
 	 * Get XML errors and display
 	 * 
 	 * Libxml does not fully implement column reporting so may on occasion return 0.
-	 * 
-	 * @return ErrorLogger
 	 */
 	public function getErrors() {
 	    foreach(libxml_get_errors() as $error) {
-	    	// Column number is not fully implemented by libxml and may return 0
-	        $this->errors->log(new Error(2, 'XML Error: '. $error->message .' Occured on line '. $error->line .' at column '. $error->column));
+	    	echo 'Error code '. $error->code .' on line '. $error->line .' @ column '. $error->column .' (File: '. $error->file .')'; 
 	    }
-		return $this->errors;
 	}
 }
 ?>
