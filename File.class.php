@@ -2,8 +2,7 @@
 /**
  * File operations Class
  * 
- * @author Ryan "Tackleberry" Marshall
- * @author Alex "Lev" Kaye
+ * @author Ryan Marshall
  * @package file
  * @subpackage generic_operations
  */

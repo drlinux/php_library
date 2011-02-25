@@ -2,8 +2,7 @@
 /**
  * File operations Class
  * 
- * @author Ryan "Tackleberry" Marshall
- * @author Alex "Lev" Kaye
+ * @author Ryan Marshall
  */
 class Folder {
 	private $folder;

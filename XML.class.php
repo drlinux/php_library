@@ -2,7 +2,7 @@
 /**
  * XML class creates instances of the currently chosen xml parser class (simpleXMLElement)
  * 
- * @author Ryan "Tackleberry" Marshall
+ * @author Ryan Marshall
  * @package file
  * @subpackage xml
  */

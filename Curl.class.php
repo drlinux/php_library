@@ -4,7 +4,7 @@
  *
  * @package transfer
  * @subpackage curl
- * @author Ryan "Tackleberry" Marshall
+ * @author Ryan Marshall
  */
 class Curl {
 	public $ch;
