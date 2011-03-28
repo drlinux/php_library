@@ -149,7 +149,6 @@ class File implements Iterator {
 	}
 	/**
 	 * Print to Screen
-	 * 
 	 * Print $this-FileString to screen
 	 */
 	public function printToScreen() {
