@@ -140,7 +140,6 @@ class File implements Iterator {
 	 */
 	public function addRow($data, $delimiter = ",", $enclosure = '"') {
 		if ($this->autoSave == true) {
-			chown ($this->file_name, 'dbell');
 			if (fputcsv($this->handle, $data, $delimiter, $enclosure) or $error = new Error(3, 'Error writing to file: '. $this->file_name));		
 		} else {
 			foreach ($data AS $fields) {
