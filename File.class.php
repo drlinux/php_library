@@ -47,6 +47,7 @@ class File implements Iterator {
 
 	/**
 	 * Get Current line
+	 * 
 	 * Fetches current line and moves pointer back 1 position. 
 	 * This is required so the iterator method next() will move the pointer to the correct record.
 	 * Without this the pointer would have moved on 2 as as the fgets method used in readLineIntoArray automatically moves the pointer on 1 position.
