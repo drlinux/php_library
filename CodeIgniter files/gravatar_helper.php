@@ -4,7 +4,7 @@
 * @link www.irealms.co.uk
 * @date 15/04/2011
 * @package gravatar
-* 
+*
 * Irealms.co.uk Gravatar library for use with codeigniter
 */
 
