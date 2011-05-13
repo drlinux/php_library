@@ -32,7 +32,7 @@ class Gravatar_helper {
 	*
 	* @param string $rating defaults to g
 	* @param string $size defaults to 80
-	* @param string $default_image
+	* @param string $default_image default sets can be found on the above link
 	* @param boolean $secure set to TRUE if a secure url is required
 	*
 	* @return string gratavar url
