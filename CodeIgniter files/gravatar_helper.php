@@ -1,17 +1,25 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); // Remove line to use class outside of codeigniter
 /*
+* Irealms.co.uk Gravatar library for use with codeigniter
+* 
 * @author Ryan Marshall <ryan@irealms.co.uk>
 * @link www.irealms.co.uk
 * @date 15/04/2011
 * @package gravatar
 *
-* Irealms.co.uk Gravatar library for use with codeigniter
 */
 
 class Gravatar_helper {
 	private static $base_url = 'http://www.gravatar.com/';
 	private static $secure_base_url = 'https://secure.gravatar.com/';
 
+	/*
+	 * Set the email to be used, converting it into an md5 hash as required by gravatar.com
+	 * 
+	 * @param string $email
+	 * 
+	 * @return string|boolean Email hash or if email didn't validate then return FALSE
+	 */
 	public static function set_email($email)
 	{
 		$email = strtolower($email);
@@ -55,8 +63,6 @@ class Gravatar_helper {
 			$query_string = '?'. http_build_query($options);
 		}
 
-		$hash = self::set_email($email);
-		
 		if ($secure !== FALSE) {
 			$base = self::$secure_base_url;
 		}
@@ -65,23 +71,66 @@ class Gravatar_helper {
 			$base = self::$base_url;
 		}
 		
-		return $base .'avatar/'. $hash . $query_string;
+		$hash = self::set_email($email);
+		if ($hash !== FALSE) {
+			return $base .'avatar/'. $hash . $query_string;
+		} else {
+			return FALSE;
+		}
 	}
 
-	public static function get_full_profile($email)
+	/*
+	 * Grab the full profile data for a given email from gravatar.com in xml format
+	 * 
+	 * @param string $email
+	 * @param string fetch_method defaults to file, 'curl' is the other option
+	 * 
+	 * @return object $xml->entry
+	 */
+	public static function get_full_profile($email, $fetch_method = 'file')
 	{
 		$hash = self::set_email($email);
+		if ($hash === FALSE) {
+			return FALSE;
+		}
+		
 		libxml_use_internal_errors(true);
-		$str = file_get_contents(self::$base_url . $hash .'.xml');
+		
+		if ($fetch_method === 'file') {
+			if (ini_get('allow_url_fopen') == FALSE) {
+				return FALSE;
+			}
+
+			$str = file_get_contents(self::$base_url . $hash .'.xml');			
+		}
+
+		if ($fetch_method === 'curl') {
+			if ( ! function_exists('curl_init')) {
+				return FALSE;
+			}
+			
+			$ch	= curl_init();
+			$options = array(
+				CURLOPT_RETURNTRANSFER => true,
+				CURLOPT_POST => true,
+				CURLOPT_URL	=> self::$secure_base_url . $hash .'.xml',
+				CURLOPT_TIMEOUT => 3
+			);
+			curl_setopt_array($ch, $options);
+			$str = curl_exec($ch);	
+		}
+		
 		$xml = simplexml_load_string($str);
 
 		if ($xml === FALSE)
 		{
-			echo "Failed loading XML\n";
+			$errors = array();
 			foreach(libxml_get_errors() as $error)
 			{
-				echo $error->message;
+				$errors[] = $error->message.'\n';
 			}
+			$error_string = implode('\n', $errors);
+			//throw new Exception('Failed loading XML\n'. $error_string);
 		}
 		else
 		{
