@@ -118,6 +118,7 @@ class Gravatar_helper {
 			);
 			curl_setopt_array($ch, $options);
 			$str = curl_exec($ch);	
+			print_r($str);
 		}
 		
 		$xml = simplexml_load_string($str);
@@ -130,7 +131,7 @@ class Gravatar_helper {
 				$errors[] = $error->message.'\n';
 			}
 			$error_string = implode('\n', $errors);
-			//throw new Exception('Failed loading XML\n'. $error_string);
+			throw new Exception('Failed loading XML\n'. $error_string);
 		}
 		else
 		{
