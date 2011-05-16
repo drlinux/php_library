@@ -45,7 +45,7 @@ class Gravatar_helper {
 	*
 	* @return string gratavar url
 	*/
-	public static function get_gravatar_url($email, $rating = FALSE, $size = FALSE, $default_image = FALSE, $secure = FALSE)
+	public static function get_image_url($email, $rating = FALSE, $size = FALSE, $default_image = FALSE, $secure = FALSE)
 	{
 		$query_string = FALSE;
 		$options = array();
@@ -87,7 +87,7 @@ class Gravatar_helper {
 	 * 
 	 * @return object $xml->entry
 	 */
-	public static function get_full_profile($email, $fetch_method = 'file')
+	public static function get_profile($email, $fetch_method = 'file')
 	{
 		$hash = self::set_email($email);
 		if ($hash === FALSE) {
@@ -118,7 +118,6 @@ class Gravatar_helper {
 			);
 			curl_setopt_array($ch, $options);
 			$str = curl_exec($ch);	
-			print_r($str);
 		}
 		
 		$xml = simplexml_load_string($str);
