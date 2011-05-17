@@ -50,6 +50,8 @@ class Gravatar_helper {
 		$hash = self::set_email($email);
 		
 		if ($hash === FALSE) {
+			// Hash value returned by set_email is FALSE
+			// In this case $hash has to be set to a value so the gravatar site can return a default image
 			$hash = 'invalid_email';
 		}
 		
@@ -86,13 +88,15 @@ class Gravatar_helper {
 	 * @param string $email
 	 * @param string fetch_method defaults to file, 'curl' is the other option
 	 * 
-	 * @return object $xml->entry
+	 * @return object|false $xml->entry on success, FALSE on an error
 	 */
 	public static function get_profile($email, $fetch_method = 'file')
 	{
 		$hash = self::set_email($email);
 		
 		if ($hash === FALSE) {
+			// Hash value returned by set_email is FALSE
+			// A hash value of FALSE will return no xml so the method returns FALSE
 			return FALSE;
 		}
 		
