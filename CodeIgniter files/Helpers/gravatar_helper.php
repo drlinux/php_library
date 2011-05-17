@@ -132,7 +132,7 @@ class Gravatar_helper {
 				$errors[] = $error->message.'\n';
 			}
 			$error_string = implode('\n', $errors);
-			//throw new Exception('Failed loading XML\n'. $error_string);
+			throw new Exception('Failed loading XML\n'. $error_string);
 		}
 		else
 		{
