@@ -50,8 +50,7 @@ class Gravatar_helper {
 		$hash = self::set_email($email);
 		
 		if ($hash === FALSE) {
-			// Hash value returned by set_email is FALSE
-			// In this case $hash has to be set to a value so the gravatar site can return a default image
+			// $hash has to be set to a value so the gravatar site can return a default image
 			$hash = 'invalid_email';
 		}
 		
@@ -95,7 +94,6 @@ class Gravatar_helper {
 		$hash = self::set_email($email);
 		
 		if ($hash === FALSE) {
-			// Hash value returned by set_email is FALSE
 			// A hash value of FALSE will return no xml so the method returns FALSE
 			return FALSE;
 		}
