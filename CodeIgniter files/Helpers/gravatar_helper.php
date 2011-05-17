@@ -18,7 +18,7 @@ class Gravatar_helper {
 	 * 
 	 * @param string $email
 	 * 
-	 * @return string|boolean Email hash or if email didn't validate then return FALSE
+	 * @return string|boolean Email hash or if email didn't validate then returnpw FALSE
 	 */
 	public static function set_email($email)
 	{
@@ -47,6 +47,12 @@ class Gravatar_helper {
 	*/
 	public static function get_image_url($email, $rating = FALSE, $size = FALSE, $default_image = FALSE, $secure = FALSE)
 	{
+		$hash = self::set_email($email);
+		
+		if ($hash === FALSE) {
+			$hash = 'invalid_email';
+		}
+		
 		$query_string = FALSE;
 		$options = array();
 		if ($rating !== FALSE) {
@@ -71,12 +77,7 @@ class Gravatar_helper {
 			$base = self::$base_url;
 		}
 		
-		$hash = self::set_email($email);
-		if ($hash !== FALSE) {
-			return $base .'avatar/'. $hash . $query_string;
-		} else {
-			return FALSE;
-		}
+		return $base .'avatar/'. $hash . $query_string;
 	}
 
 	/*
@@ -90,6 +91,7 @@ class Gravatar_helper {
 	public static function get_profile($email, $fetch_method = 'file')
 	{
 		$hash = self::set_email($email);
+		
 		if ($hash === FALSE) {
 			return FALSE;
 		}
@@ -130,7 +132,7 @@ class Gravatar_helper {
 				$errors[] = $error->message.'\n';
 			}
 			$error_string = implode('\n', $errors);
-			throw new Exception('Failed loading XML\n'. $error_string);
+			//throw new Exception('Failed loading XML\n'. $error_string);
 		}
 		else
 		{
