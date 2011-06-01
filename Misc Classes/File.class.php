@@ -6,6 +6,7 @@
  * @package file
  * @subpackage generic_operations
  */
+
 class File implements Iterator {
 
 	private $handle;
@@ -54,8 +55,7 @@ class File implements Iterator {
 	 */
     public function current() {
 		$data = $this->readLineIntoArray($this->separator);
-		fseek($this->handle, -$this->line_length, SEEK_CUR);
-        return $data;
+		return $data;
     }
 
 	/**
@@ -71,7 +71,7 @@ class File implements Iterator {
 	 * Iterator interface method
 	 */
     public function next() {
-        fseek($this->handle, $this->line_length, SEEK_CUR);
+        fgets($this->handle, $this->line_length);
     }
 	
 	/**
@@ -149,6 +149,7 @@ class File implements Iterator {
 	}
 	/**
 	 * Print to Screen
+	 * 
 	 * Print $this-FileString to screen
 	 */
 	public function printToScreen() {
@@ -166,8 +167,8 @@ class File implements Iterator {
 	 * 
 	 * @return string replacement string
 	 */
-	public function nl2brReplace($string) {
-		return str_replace(array("\r\n", "\r", "\n"), '<br />', $string);
+	public function nl2brReplace($string, $replacement = '<br />') {
+		return str_replace(array("\r\n", "\r", "\n"), $replacement, $string);
 	}
 }
 ?>
