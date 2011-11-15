@@ -12,7 +12,7 @@ class File implements Iterator {
 	private $handle;
 	private $file_name;
 	private $fileString;
-	private	$autoSave = true;
+	private $autoSave = true;
 	private $separator;
 	private $line_length;
 	private $end_of_file;
@@ -42,48 +42,45 @@ class File implements Iterator {
 	 * Rewind file pointer to start of file
 	 * Iterator interface method
 	 */
-    public function rewind() {
-        rewind($this->handle);
-    }
+	public function rewind() {
+		rewind($this->handle);
+	}
 
 	/**
 	 * Get Current line
-	 * Fetches current line and moves pointer back 1 position. 
-	 * This is required so the iterator method next() will move the pointer to the correct record.
-	 * Without this the pointer would have moved on 2 as as the fgets method used in readLineIntoArray automatically moves the pointer on 1 position.
 	 * Iterator interface method
 	 */
-    public function current() {
-		$data = $this->readLineIntoArray($this->separator);
+	public function current() {
+		$data = $this->readLineIntoArray();
 		return $data;
-    }
+	}
 
 	/**
 	 * Return file pointer position 
 	 * Iterator interface method
 	 */
-    public function key() {
-        return ftell($this->handle);
-    }
+	public function key() {
+		return ftell($this->handle);
+	}
 
 	/**
 	 * Move file pointer on one line
 	 * Iterator interface method
 	 */
-    public function next() {
-        fgets($this->handle, $this->line_length);
-    }
+	public function next() {
+		fgets($this->handle, $this->line_length);
+	}
 	
 	/**
 	 * Checks for valid file pointer
 	 * Iterator interface method
 	 */
-    public function valid() {
+	public function valid() {
 		if (ftell($this->handle) >= $this->end_of_file) {
-			return false;
+			return FALSE;
 		}
-		return true;
-    }
+		return TRUE;
+	}
 	
 	/**
 	 * Destruct - Close file
@@ -106,7 +103,7 @@ class File implements Iterator {
 		    $data = explode($this->separator, $data);
 		    return $data;
 		}
-		return false;
+		return NULL;
 	}
 	
 	/**
@@ -125,8 +122,8 @@ class File implements Iterator {
 	 * @param string $string string to write   
 	 */
 	public function addLine($string) {
-		if ($this->autoSave == true) {   
-			@fwrite($this->handle, $string) or $error = new Error(3, 'Error writing to file: '. $this->file_name);		
+		if ($this->autoSave == TRUE) {   
+			@fwrite($this->handle, $string) or die ('Error writing to file: '. $this->file_name);		
 		} else {
 			$this->fileString .= $string;	
 		}
@@ -139,8 +136,8 @@ class File implements Iterator {
 	 * @param string $enclosure file field enclosure (default = '"')
 	 */
 	public function addRow($data, $delimiter = ",", $enclosure = '"') {
-		if ($this->autoSave == true) {
-			if (fputcsv($this->handle, $data, $delimiter, $enclosure) or $error = new Error(3, 'Error writing to file: '. $this->file_name));		
+		if ($this->autoSave == TRUE) {
+			if (fputcsv($this->handle, $data, $delimiter, $enclosure) or die ('Error writing to file: '. $this->file_name));		
 		} else {
 			foreach ($data AS $fields) {
 				$this->fileString .= $string;
@@ -155,10 +152,8 @@ class File implements Iterator {
 	public function printToScreen() {
 		if ($this->fileString) {
 			print_r($this->fileString);
-		} else {
-			$error = new Error(1,'File string is empty!');
-			$error->show();
 		}
+		return NULL;
 	}
 	/**
 	 * Replace \r\n, \r\, \n with <br />
