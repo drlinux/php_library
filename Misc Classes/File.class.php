@@ -97,13 +97,29 @@ class File implements Iterator {
 	 * 
 	 * @return array/boolean $data current line as data array
 	 */
-	public function readLineIntoArray() {
+	public function read_line() {
 		if ($this->handle) {
 		    $data = fgets($this->handle, $this->line_length);
 		    $data = explode($this->separator, $data);
 		    return $data;
 		}
 		return NULL;
+	}
+    
+	/**
+	 * Read a line from csv file into a data array
+	 * 
+	 * @param $handle file handle
+	 * @param string $enclosure file field enclosure
+	 * 
+	 * @return array/boolean $data current line as data array
+	 */
+	public function read_line_csv($enclosure = NULL) {
+		if ($this->handle) {
+		    $data = fgetcsv($this->handle, $this->line_length, $this->separator, $enclosure);
+		    return $data;
+		}
+		return false;
 	}
 	
 	/**
@@ -139,8 +155,8 @@ class File implements Iterator {
 		if ($this->autoSave == TRUE) {
 			if (fputcsv($this->handle, $data, $delimiter, $enclosure) or die ('Error writing to file: '. $this->file_name));		
 		} else {
-			foreach ($data AS $fields) {
-				$this->fileString .= $fields;
+			foreach ($data AS $string) {
+				$this->fileString .= $string;
 			}
 		}			
 	}
