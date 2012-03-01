@@ -140,7 +140,7 @@ class File implements Iterator {
 			if (fputcsv($this->handle, $data, $delimiter, $enclosure) or die ('Error writing to file: '. $this->file_name));		
 		} else {
 			foreach ($data AS $fields) {
-				$this->fileString .= $string;
+				$this->fileString .= $fields;
 			}
 		}			
 	}
